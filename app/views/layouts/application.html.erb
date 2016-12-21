@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<%= render '/refinery/html_tag' %>
+<% site_bar = render('/refinery/site_bar', :head => true) -%>
+<%= render '/refinery/head' %>
+<style>
+html{
+    height:100%;
+    background-size:cover;
+}
+body{
+    /* Workaround for some mobile browsers */
+    height:100%;
+}
+
+</style>
+<%= render '/refinery/javascripts' unless is_from_mobile %>
+<body>
+  <%= site_bar -%>
+  <%= render '/refinery/ie6check' if request.env['HTTP_USER_AGENT'] =~ /MSIE/ -%>
+  <div id="page_container" style="min-height:100%;position:relative" >
+    <header id="header" class='art-header clearfix'>
+    <nav class="art-nav clearfix desktop-nav " style='position:relative'>
+      <div class="art-nav-inner">
+        <ul class="art-hmenu">
+          <% Refinery::Page.where('show_in_menu = 1').each do |page|
+            page_url = refinery.url_for(page.url)
+            css_class = page_url.match(/blog/) ?  '' : '' %>
+            <li><%= link_to page.title, page_url, :class => css_class -%></li>
+          <% end %>
+        </ul>
+      </div>
+      </nav>
+    </header>
+    <section id="page" class='art-postcontent' style='clear: both; padding-bottom:56px;'>
+      <%= yield %>
+    </section>
+    <footer class="art-footer clearfix" style="bottom:0;height:56px;position:absolute;">
+    <div class="art-footer-inner">
+      <div style="position:relative;display:inline-block;padding-left:35px;padding-right:35px">
+        友情链接  <a href="http://tidev.in"  target="_blank">Titanium开发者论坛</a>
+        <a href="http://siwei.me" target="_blank">申思维</a>
+        <a href="http://yanmin.in" target="_blank">卢彦民</a>
+        <a href="http://shuanglei.info"  target="_blank">双蕾</a>
+        <a href="http://lige.space" target="_blank">李戈</a>
+       <p>Copyright © 2015. 张明常的个人站点.</p><br></div>
+     </div>
+     </footer>
+  </div>
+</body>
+<script>
+$('pre').each(function(i, block) {
+  hljs.highlightBlock(block);
+});
+</script>
+</html>

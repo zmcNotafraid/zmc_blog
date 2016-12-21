@@ -1,0 +1,20 @@
+development: &development
+  adapter: mysql2
+  host: localhost
+  username: root
+  password:
+  database: zmc_blog
+
+test: &test
+  adapter: mysql2
+  host: localhost
+  username: root
+  password:
+  database: zmc_blog_test
+
+production: &production
+  adapter: mysql2
+  host: localhost
+  database: zmc_blog
+  username: root
+  password:

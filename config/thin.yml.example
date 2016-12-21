@@ -1,0 +1,15 @@
+---
+chdir: /opt/app/zhangmc/current
+environment: production
+address: 0.0.0.0
+port: 3333
+timeout: 30
+log: /opt/app/zhangmc/shared/log/thin.log
+pid: /opt/app/zhangmc/shared/pids/thin.pid
+#socket: /var/www/discourse/tmp/thin.sock
+max_conns: 1024
+max_persistent_conns: 100
+require: []
+wait: 30
+servers: 1
+daemonize: true

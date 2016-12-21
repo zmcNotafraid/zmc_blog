@@ -1,0 +1,40 @@
+log4r_config:
+  # define all loggers ...
+  loggers:
+    - name      : production
+      level     : ERROR
+      trace     : 'false'
+      outputters :
+      - datefile_for_production
+    - name      : development
+      level     : DEBUG
+      trace     : 'true'
+      outputters :
+      - datefile_for_development
+    - name      : test
+      level     : DEBUG # don't show log of active-record.
+      trace     : 'true'
+      outputters :
+      - datefile_for_development
+
+  # define all outputters (incl. formatters)
+  outputters:
+  - type: DateFileOutputter
+    name: datefile_for_production
+    dirname: "log"
+    #filename: "cms_production.log"
+    formatter:
+      date_pattern: '%H:%M:%S'
+      pattern     : '%d %l: %m '
+      type        : PatternFormatter
+
+  - type: DateFileOutputter
+    name: datefile_for_development
+    dirname: "log"
+    # no name given here...
+    #filename: "cms_production.log"
+    formatter:
+      date_pattern: '%H:%M:%S'
+      pattern     : '%d %l: %m '
+      type        : PatternFormatter
+

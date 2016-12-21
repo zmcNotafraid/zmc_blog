@@ -1,0 +1,14 @@
+This is source code for blog, based on Refinery CMS. (http://refinerycms.com/)
+
+== Setup
+
+1. $ git clone
+2. $ cd zmc_blog.me
+3. $ bundle install
+4. $ bin/init_config to copy yml file
+5. $ bundle exec rake db:setup
+7. $ bundle exec thin start -p 3888 -e production -d (or  -C config/thin.yml)
+
+== Feature
+
+1. Support Markdown

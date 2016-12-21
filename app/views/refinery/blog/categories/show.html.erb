@@ -1,0 +1,68 @@
+<style>
+.pagination {
+  font-size: 18px;
+  padding: 5px 5px 4px 5px;
+  margin: 10px 0px;
+}
+.pagination em {
+  font-weight: bold;
+  font-style: normal;
+  padding: 0px 6px;
+}
+
+.pagination .current {
+  color: white;
+}
+
+.pagination .disabled {
+  color: #DDEE3F;
+}
+
+.pagination a, #content .pagination a, .pagination .current, .disabled, .pagination em {
+  padding: 7px;
+  line-height: 20px;
+  border-bottom: 0px none;
+}
+
+.pagination .current, .pagination a:hover, .pagination em {
+  background: #DDEE3F;
+}
+</style>
+<% content_for :body_content_title, @category.title %>
+
+<% content_for :body_content_left do %>
+  <%= form_tag '', :method => :get do %>
+    <%= text_field_tag "title", params[:title], :placeholder => '模糊匹配 全文,例如:测试', :style => 'max-width: 200px;
+      padding: 4px 0;
+      '  %>
+    <%= submit_tag "搜索", :style => 'height: 28px;
+      width: 53px;' %>
+  <% end %>
+  <p >已被访问: <%= Refinery::Blog::Post.sum(:access_count) %>次, 还有谁！</p>
+  <% if @posts.any? %>
+    <% if params[:title].present? %>
+      <p>  未分页，总共 <%= @posts.size %> 篇标题和<span style="color:red">正文</span>中包含 <span style='color:red'> "<%= params[:title] %>" </span>的文章。 </p>
+    <% else %>
+    <p>  未分页，总共 <%= @posts.size %> 篇文章。 </p>
+    <% end %>
+    <section id="blog_posts">
+      <%= will_paginate @posts %>
+      <%= render :partial => "/refinery/blog/shared/post", :collection => @posts %>
+      <%= will_paginate @posts %>
+    </section>
+  <% else %>
+    <p>
+    没找到您要搜索的文章
+    </p>
+  <% end %>
+<% end %>
+
+<% content_for :body_content_right do %>
+  <%= render :partial => "/refinery/blog/shared/categories" %>
+<% end %>
+
+<%= render :partial => "/refinery/content_page" %>
+<% content_for :stylesheets, stylesheet_link_tag('refinery/blog/frontend') %>
+<script>
+  $('#title').focus();
+</script>

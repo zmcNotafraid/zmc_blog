@@ -1,0 +1,7 @@
+<% if post.live? %>
+  <article class="blog_post" id="<%= dom_id(post) %>">
+    <header>
+    <h1><%= link_to "#{post.published_at.to_date} #{post.title} (#{post.access_count})",refinery.blog_post_path(post) %> </h1>
+    </header>
+  </article>
+<% end %>
